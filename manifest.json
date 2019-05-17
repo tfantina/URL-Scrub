@@ -1,0 +1,25 @@
+{
+    "manifest_version": 2,
+    "name": "URL Scrubber",
+    "version": "0.1",
+    "description": "Cleans URLs taken from CISS (currently applicable only to AGA Canada)",
+    "author": "Travis Fantina",
+    "content_scripts": [ {
+        "matches" : [
+            "http://ciss/*"
+        ],
+        "js":["content.js"]
+    }],
+    // "background": {
+    //     "scripts": ["background.js", "url-scrub.js"]
+    // },
+    "browser_action": {
+        "default_popup": "url-scrub.html",
+       "default_icon": "icon.png"
+    },
+    "permissions": ["tabs"]
+
+}
+
+ 
+//"default_popup": "url-scrub.html",
