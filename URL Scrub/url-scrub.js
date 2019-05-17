@@ -1,16 +1,26 @@
-document.getElementById("urlGrab").onClick = replace();
+//document.getElementById("urlGrab").onClick = replace();
 
-  function replace() {
-    var str = document.getElementById("url").value;
-    if(str.length > 0){
-   
-    var preSplit = str.replace("http://ciss", "N:")
+// chrome.browserAction.onClicked.addListener(function(tab){
+//   chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+//       var activeTab = tabs[0]
+      
+//       replace(activeTab.url)
+ 
+//   })
+// })
+
+
+  function replace(url) {
+
+
+  alert(url);
+    var preSplit = url.replace("http://ciss", "N:")
     var splitTxt = decodeURIComponent(preSplit).split("/");
 
 
     var holder = [];
     var fileName;
-
+    
     for(var i = 0; i < splitTxt.length; i++) {
       if(i === splitTxt.length - 1) {
         fileName = splitTxt[i];
@@ -21,19 +31,19 @@ document.getElementById("urlGrab").onClick = replace();
 
     }
     
-  
+ 
     copyTxt(splitTxt, fileName);
 
     document.getElementById('output').innerHTML = holder.join("");
    
-    
-    } else {
-      document.getElementById('output').innerHTML = "Please enter a CISS URL"
-    }
-  }
+
+    } 
+  
 
   function copyTxt(splitTxt, fileName) {
+    alert("gotthis")
     var copyArea = document.createElement('textarea');
+    alert(copyArea);
     splitTxt.pop();
     document.body.appendChild(copyArea);
     copyArea.value = splitTxt.join("/");
@@ -41,5 +51,19 @@ document.getElementById("urlGrab").onClick = replace();
     copyArea.select();
     document.execCommand("copy")
     document.body.removeChild(copyArea);
+
     
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var link = document.getElementById("urlGrab");
+    link.addEventListener("click", function() {
+      chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+              var activeTab = tabs[0]
+              
+             replace(activeTab.url)
+         
+           })
+      
+    })
+  })
